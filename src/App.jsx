@@ -199,6 +199,13 @@ import { useWindowSize } from '@react-hook/window-size';
 import './App.css';
 
 function App() {
+  // Cookie type state
+  const [cookieType, setCookieType] = useState("cookie");
+
+  // Toggle cookie type
+  const handleToggleCookieType = () => {
+    setCookieType(prev => prev === "cookie" ? "fortune-cookie" : "cookie");
+  };
   // Reset auto clickers
   const handleResetAutoClickers = () => {
     setAutoClickers(0);
@@ -391,11 +398,31 @@ function App() {
 
       {/* Main cookie */}
       <img
-        src="/cookie.png"
-        alt="Cookie"
+        src={cookieType === "cookie" ? "/cookie.png" : "/fortune-cookie.png"}
+        alt={cookieType === "cookie" ? "Cookie" : "Fortune Cookie"}
         onClick={handleClick}
         className={`cookie ${isClicked ? 'clicked' : ''}`}
       />
+      {/* Change Cookie Type Button */}
+      <button
+        onClick={handleToggleCookieType}
+        style={{
+          position: "fixed",
+          bottom: "30px",
+          right: "30px",
+          padding: "0.7rem 1.2rem",
+          fontSize: "1rem",
+          backgroundColor: "#d2691e",
+          color: "white",
+          border: "none",
+          borderRadius: "50px",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+          cursor: "pointer",
+          zIndex: 100
+        }}
+      >
+        Change Cookie Type
+      </button>
 
       {/* Golden cookie */}
       {goldenCookie && (
@@ -412,10 +439,10 @@ function App() {
       {fallingCookies.map(c => (
         <img
           key={c.id}
-          src="/cookie.png"
-          alt="Falling Cookie"
+          src={cookieType === "fortune-cookie" ? "/fortune-cookie.png" : "/cookie.png"}
+          alt={cookieType === "fortune-cookie" ? "Falling Fortune Cookie" : "Falling Cookie"}
           className="falling-cookie"
-          style={{ left: `${c.left}%` }}//help
+          style={{ left: `${c.left}%` }}
         />
       ))}
 
